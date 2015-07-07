@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mail="http://www.springframework.org/schema/integration/mail"
+       xmlns:integration="http://www.springframework.org/schema/integration"
+       xmlns:beans="http://www.springframework.org/schema/beans"       
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:ws="http://www.springframework.org/schema/integration/ws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+	<integration:channel id="inputChannel" />
+		
+	<integration:channel id="outputChannel" />
+		
+
+	<integration:service-activator id="myServiceActivator"
+					   input-channel="inputChannel"
+					   output-channel="outputChannel"
+	                   ref="myEchoService"
+	                   method="echoUser"/>
+
+	<beans:bean id="myEchoService" class="corso.spring.intgr.demo.basic.service.ServiceEchoUserImpl"/>
+
+</beans>

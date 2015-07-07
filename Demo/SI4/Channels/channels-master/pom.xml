@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>si4-corso</groupId>
+  <artifactId>demo-channels</artifactId>
+  <version>1.0.0.BUILD-SNAPSHOT</version>
+  <name>Channels Basic Sample</name>
+  <description>Channels Basic Sample</description>
+  <url>http://stefano/spring-integration</url>
+  
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+		<spring.integration.version>4.1.0.RC1</spring.integration.version>
+		<junit.version>4.11</junit.version>
+	</properties>
+  
+  <dependencies>
+  <dependency>
+      <groupId>org.springframework.integration</groupId>
+      <artifactId>spring-integration-core</artifactId>
+      <version>${spring.integration.version}</version>
+      <scope>compile</scope>
+    </dependency>
+     <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
+      <scope>compile</scope>
+    </dependency>    
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    
+  </dependencies>
+  <modules>
+    <module>channels-01-basic</module>
+    <module>channels-02-prg</module>
+  </modules>
+</project>

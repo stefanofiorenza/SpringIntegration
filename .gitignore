@@ -1,1 +1,14 @@
 Temp/
+Demo/.metadata/
+Demo/*/.settings/
+Demo/*/target/
+*.classpath
+*.project
+Demo/SI4/Channels/.metadata/
+Demo/SI4/*/.metadata/
+Demo/SI4/*/endpoints-master/*/target/
+Demo/SI4/Channels/channels-master/*/target/
+Demo/SI4/Endpoints/endpoints-master/*/.settings/
+Demo/SI4/Endpoints/endpoints-master/.settings/
+Demo/SI4/Channels/channels-master/*/.settings/
+Demo/SI4/Channels/channels-master/.settings/

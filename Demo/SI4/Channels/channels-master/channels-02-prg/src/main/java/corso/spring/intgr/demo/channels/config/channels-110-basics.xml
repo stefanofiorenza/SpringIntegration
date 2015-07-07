@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:beans="http://www.springframework.org/schema/beans"       
+      xsi:schemaLocation="
+      		http://www.springframework.org/schema/beans
+           	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<beans:bean id="TicketRdaProducer" class="corso.spring.intgr.demo.channels.services.TicketRdaProducer"/>
+	<beans:bean id="TicketRdaConsumerPolling" class="corso.spring.intgr.demo.channels.services.TicketRdaConsumerPolling"/>
+	<beans:bean id="TicketRdaConsumerEventDriven" class="corso.spring.intgr.demo.channels.services.TicketRdaConsumerEventDriven"/>
+
+</beans>

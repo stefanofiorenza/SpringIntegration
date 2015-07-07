@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:context="http://www.springframework.org/schema/context"
+	
+	 xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+
+
+<context:component-scan
+	base-package="corso.spring.integration.stocks.endpoints"/>
+
+<int:gateway id="myMarketItemSystemGateway" 
+	service-interface="corso.spring.integration.stocks.endpoints.MarketItemSystemGateway" 
+	default-request-channel="marketItemChannel"/>
+
+	<int:channel id="marketItemChannel" />
+	
+	<int:filter ref="marketItemsFilter"
+		input-channel="marketItemChannel"
+		output-channel="filteredItemsChannel"
+		method="filterMarketItems"
+		/>
+	
+	<int:channel id="filteredItemsChannel" />
+	
+	<int:router id="myMarketItemsRouter" 
+		ref="marketItemsRouter"
+		input-channel="filteredItemsChannel" />
+	
+	<int:channel id="stock" />
+	<int:channel id="bond" />
+				
+	<int:transformer 
+		ref="stockProcessor"
+		input-channel="stock"
+		output-channel="outToStockService"		
+		method="processStockMessage" />
+	
+	<int:transformer 
+		ref="bondProcessor"		
+		input-channel="bond"
+		output-channel="outToBondService"
+		method="processBondMessage" />	
+		
+	<int:channel id="outToStockService" />			
+	<int:channel id="outToBondService" />
+	
+	
+	<int:service-activator 
+		input-channel="outToStockService"
+		ref="stockService"
+		method="executeStockLogic"
+		requires-reply="false"
+		 />
+		
+	<int:service-activator 
+		input-channel="outToBondService"
+		ref="bondService"
+		method="executeBondLogic"
+		requires-reply="false" />
+</beans>
