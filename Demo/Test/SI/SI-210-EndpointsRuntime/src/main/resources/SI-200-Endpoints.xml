@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:context="http://www.springframework.org/schema/context"
+	
+	 xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+
+
+<context:component-scan
+	base-package="corso.spring.intgr.endpoints.demo.services"/>
+
+<!-- <int:gateway id="orderSystemGateway" 
+	service-interface="corso.spring.intgr.endpoints.demo.services.OrderSystemGateway" 
+	default-request-channel="marketItemChannel"/> -->
+
+	<int:channel id="orderMainInputChannel" />
+	
+	<int:filter 
+		input-channel="orderMainInputChannel"
+		ref="orderFilter"
+		method="filterOrders"		
+		output-channel="filteredOrdersChannel"		
+		/>
+	
+	<int:channel id="filteredOrdersChannel" />
+	
+	<int:router  
+		ref="orderRouter"
+		method="route"
+		input-channel="filteredOrdersChannel" />
+	<!-- Outputs Router sono nomi logici dei prossimi channels -->
+				
+	<!--  In Synch with con router outputs (nel caso specifico output e' di tipo OrderType.name)-->
+	<int:channel id="routerToDerivatiChannel" />
+	<int:channel id="routerToStockChannel" />
+	<int:channel id="routerToPblBondChannel" />
+	<int:channel id="routerToPvtBondChannel" />
+	
+	<int:service-activator 
+		input-channel="routerToDerivatiChannel"	
+		ref="derivatiService"
+		method="executeDerivatiLogic"			
+		requires-reply="false"
+		 />	 	
+				
+	<int:transformer 
+		input-channel="routerToStockChannel"
+		ref="stockProcessor"
+		method="processStockMessage"
+		output-channel="trasformerStocksChannel"		
+		 />
+	
+	<int:transformer 
+		input-channel="routerToPblBondChannel"
+		ref="publicBondProcessor"	
+		method="processPublicBondMessage"
+		output-channel="trasformerBondChannel" />	
+		
+	<int:transformer 
+		input-channel="routerToPvtBondChannel"
+		ref="privateBondProcessor"		
+		method="processPrivateBondMessage"
+		output-channel="trasformerBondChannel" />
+		
+	<int:channel id="trasformerStocksChannel" />			
+	<int:channel id="trasformerBondChannel" />
+		
+	<int:service-activator 		
+		input-channel="trasformerStocksChannel"
+		ref="stockService"
+		method="executeStockLogic"		
+		requires-reply="false"
+		 />
+		
+	<int:service-activator 		
+		input-channel="trasformerBondChannel"
+		ref="bondService"
+		method="executeBondLogic"		
+		requires-reply="false" />
+</beans>

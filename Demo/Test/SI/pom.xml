@@ -1,0 +1,178 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>corso-spring-integration</groupId>
+  <artifactId>SI</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>SI</name>
+  <description>Spring integration demos</description>
+  
+   <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <spring.version>4.3.0.RELEASE</spring.version>	
+		<spring.integration.version>4.3.0.RELEASE</spring.integration.version>
+	    	
+	    <!-- Db libs -->
+		<apache.dbcp.version>1.4</apache.dbcp.version>	
+		<mysql.driver.version>5.1.36</mysql.driver.version>	
+		
+		<!-- 3rd part libs -->
+		<version.lombok>1.16.12</version.lombok>			
+	  	<version.jackson>2.6.3</version.jackson>
+	  	<version.commons.lang>3.4</version.commons.lang>
+		<version.commons.io>2.4</version.commons.io>
+		<version.commons.io>2.4</version.commons.io>
+	  	<version.httpclient>4.4.1</version.httpclient>
+  	
+		<!-- Loggers -->
+		<version.logback>1.1.3</version.logback>	
+		<version.slf4j.org>1.7.13</version.slf4j.org>        
+		<version.jcloverslf4j>1.7.7</version.jcloverslf4j>	
+		
+		<junit.version>4.11</junit.version>
+	</properties>
+  
+  
+    
+    <dependencies>
+    
+      <!-- Spring Core -->
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+  
+		  <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+  
+		  <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>			
+		</dependency>
+		
+		
+	   <!-- Spring Integration -->
+
+    
+	 	 <dependency>
+	      <groupId>org.springframework.integration</groupId>
+	      <artifactId>spring-integration-core</artifactId>
+	      <version>${spring.integration.version}</version>     
+	    </dependency>
+	    	    
+	   <dependency>
+	      <groupId>org.springframework.integration</groupId>
+	      <artifactId>spring-integration-event</artifactId>
+	      <version>${spring.integration.version}</version>     
+	    </dependency>
+	    
+	 	<dependency>
+		    <groupId>org.springframework.integration</groupId>
+		    <artifactId>spring-integration-test</artifactId>
+		     <version>${spring.integration.version}</version>
+		     <scope>test</scope>
+		</dependency>
+
+
+    	<!-- Db dependencies -->
+		  <dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.driver.version}</version>			
+		</dependency>
+  
+  		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>${apache.dbcp.version}</version>
+		</dependency>
+  
+  
+
+	 	<!-- LogBack dependencies -->
+			<dependency>
+	            <groupId>org.slf4j</groupId>
+	            <artifactId>slf4j-api</artifactId>
+	            <version>${version.slf4j.org}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>ch.qos.logback</groupId>
+	            <artifactId>logback-classic</artifactId>
+	            <version>${version.logback}</version>
+	            <scope>runtime</scope> 
+	         </dependency>
+	        <dependency>
+	            <groupId>org.slf4j</groupId>
+	            <artifactId>jcl-over-slf4j</artifactId>
+	            <version>${version.jcloverslf4j}</version>
+	            <!-- <scope>runtime</scope> --> <!-- some spring dependencies need to compile against jcl -->
+	        </dependency>
+	        <dependency> <!-- needed to bridge to slf4j for projects that use the log4j APIs directly -->
+	            <groupId>org.slf4j</groupId>
+	            <artifactId>log4j-over-slf4j</artifactId>
+	            <version>${version.slf4j.org}</version>
+	        </dependency>
+	    
+	    
+	        <!-- TEST libs -->	
+		    <dependency>
+		      <groupId>junit</groupId>
+		      <artifactId>junit</artifactId>
+		      <version>${junit.version}</version>
+		      <scope>test</scope>
+		    </dependency>
+    
+ 		
+	
+		   
+			<!-- Other libs -->	
+	  		<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>		
+				<version>${version.lombok}</version>						
+			</dependency>		
+			
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>		
+				<version>${version.commons.lang}</version>
+			</dependency>	
+							
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>	
+				<version>${version.commons.io}</version>			
+			</dependency>			
+	
+		
+			<!--  Jackson -->	
+			<!--			
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>		
+				<version>${version.jackson}</version>		
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${version.jackson}</version>
+			</dependency>
+		-->
+        </dependencies>
+ 
+    
+    <modules>
+    	<module>SI-00-Commons</module>
+    	<module>SI-100-Channels</module>    	
+    	<module>SI-200-Endpoints</module>
+    	<module>SI-300-Adapters</module>
+    	<module>SI-210-EndpointsRuntime</module>
+    	<module>SI-010-Basics</module>
+    </modules>
+</project>

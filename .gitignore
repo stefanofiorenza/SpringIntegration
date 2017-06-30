@@ -12,3 +12,8 @@ Demo/SI4/Endpoints/endpoints-master/*/.settings/
 Demo/SI4/Endpoints/endpoints-master/.settings/
 Demo/SI4/Channels/channels-master/*/.settings/
 Demo/SI4/Channels/channels-master/.settings/
+Demo/Test/.metadata/**
+*/.settings/**
+.settings/**
+Demo/Test/SI/*/.settings/**
+Demo/Test/SI/.settings/**
