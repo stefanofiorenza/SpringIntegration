@@ -17,7 +17,7 @@ import corso.spring.intgr.demo.basics.model.User;
 public class SI010BasicsTest {
 
 	
-	//@Test
+	@Test
 	public void testBasicDemoXml(){
 		
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("SI-010-Basics.xml");
@@ -26,7 +26,7 @@ public class SI010BasicsTest {
 				
 	}
 	
-	@Test
+	//@Test
 	public void testBasicDemoAnnotationsSI(){
 		
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();

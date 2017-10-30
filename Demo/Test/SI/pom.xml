@@ -80,6 +80,34 @@
 		</dependency>
 
 
+		<!-- Adapters -->
+		<dependency>
+		    <groupId>org.springframework.integration</groupId>
+		    <artifactId>spring-integration-file</artifactId>
+		    <version>${spring.integration.version}</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.springframework.integration</groupId>
+		    <artifactId>spring-integration-jms</artifactId>
+		  	<version>${spring.integration.version}</version>
+		</dependency>
+		
+		
+		<!--  Removed because log unfriendly -->		
+	<!-- 	<dependency>
+    		<groupId>org.apache.activemq</groupId>
+    		<artifactId>activemq-all</artifactId>
+    		<version>5.14.3</version>
+    	</dependency> -->
+    	
+    	<dependency>
+    <groupId>org.apache.activemq</groupId>
+    <artifactId>activemq-spring</artifactId>
+    <version>5.14.3</version>
+</dependency>
+		
+
     	<!-- Db dependencies -->
 		  <dependency>
 			<groupId>mysql</groupId>
@@ -174,5 +202,7 @@
     	<module>SI-300-Adapters</module>
     	<module>SI-210-EndpointsRuntime</module>
     	<module>SI-010-Basics</module>
+    	<module>SI-310-LocalSysAdapters</module>
+    	<module>SI-320-ExternalSysAdapters</module>
     </modules>
 </project>

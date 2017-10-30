@@ -8,6 +8,24 @@
   <artifactId>SI-200-Endpoints</artifactId>
   <name>SI-200-Endpoints</name>
   
+  
+     <properties>
+      <version.jdk>1.8</version.jdk>     
+   </properties>
+   
+  <build>	
+  	<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${version.jdk}</source>
+					<target>${version.jdk}</target>
+				</configuration>
+			</plugin>			
+		</plugins>
+	</build>
+	
+	
   <dependencies>
 
 

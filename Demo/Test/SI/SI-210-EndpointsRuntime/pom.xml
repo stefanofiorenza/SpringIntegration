@@ -6,6 +6,24 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>SI-210-EndpointsRuntime</artifactId>
+  
+     <properties>
+      <version.jdk>1.8</version.jdk>     
+   </properties>
+   
+  <build>	
+  	<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${version.jdk}</source>
+					<target>${version.jdk}</target>
+				</configuration>
+			</plugin>			
+		</plugins>
+	</build>
+	
+	
   <dependencies>
   	<dependency>
   		<groupId>corso-spring-integration</groupId>

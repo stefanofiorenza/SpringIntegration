@@ -7,4 +7,29 @@
   </parent>
   <artifactId>SI-300-Adapters</artifactId>
   <name>SI-300-Adapters</name>
+  
+     <properties>
+      <version.jdk>1.8</version.jdk>     
+   </properties>
+   
+  <build>	
+  	<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${version.jdk}</source>
+					<target>${version.jdk}</target>
+				</configuration>
+			</plugin>			
+		</plugins>
+	</build>
+	
+	
+  <dependencies>
+  	<dependency>
+  		<groupId>corso-spring-integration</groupId>
+  		<artifactId>SI-00-Commons</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>

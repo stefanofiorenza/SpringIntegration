@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration
+		http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/integration/jms
+		http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd">
+		
+	<context:component-scan base-package="corso.spring.intgr.common.services"/>
+
+	<bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate">
+		<property name="environment">
+			<props>
+				<prop key="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</prop>
+				<prop key="java.naming.provider.url">tcp://localhost:61616</prop>
+				<prop key="connectionFactoryNames">connectionFactory</prop>
+				<prop key="queue.orderQueue">order.queue</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+		<!--  JMS Connection Factory-->		
+		<bean id="jmsConnectionFactoryNoPool" class="org.springframework.jndi.JndiObjectFactoryBean">
+			<property name="jndiName" value="connectionFactory" />
+			<property name="jndiTemplate" ref="jndiTemplate"/>
+		</bean>
+		
+		<!-- A cached connection to wrap the ActiveMQ connection --> 
+		<bean id="jmsPooledConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+		 	<constructor-arg ref="jmsConnectionFactoryNoPool" />	  
+		  	<property name="sessionCacheSize" value="10" /> 		  	
+		</bean>
+		
+		<bean id="connectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+		    <property name="brokerURL" value="tcp://localhost:61616"/>
+		    <property name="trustAllPackages" value="true"/>
+		</bean>
+
+		
+		<!-- Queues -->
+		<bean id="orderQueue" class="org.apache.activemq.command.ActiveMQQueue">
+			<constructor-arg value="order.queue" />
+		</bean>
+		
+		
+		<bean id="jmsEndDemoService" class="corso.spring.intgr.adapters.external_sys.main.DemoJmsLoggingService" />
+	
+	
+	<int:channel id="orderOutgoingChannel">
+		<int:queue capacity="50"/>
+	</int:channel>
+
+
+	<jms:outbound-channel-adapter id="orderJmsOutgoing" connection-factory="jmsPooledConnectionFactory" 
+			destination-name="order.queue" channel="orderOutgoingChannel">
+			<int:poller max-messages-per-poll="5" fixed-rate="1000" />
+	</jms:outbound-channel-adapter>
+				
+			
+	
+	<!--  TO enable as Jms Poller -->		
+ 	<!-- <jms:inbound-channel-adapter id="orderJmsIncoming" connection-factory="connectionFactory" 
+			destination-name="order.queue" channel="orderIncomingChannel">
+			<int:poller max-messages-per-poll="5" fixed-rate="1000" />
+	</jms:inbound-channel-adapter> -->
+	
+	<!--  TO enable as Jms Event Driven Consumer -->	
+	<jms:message-driven-channel-adapter id="orderJmsIncoming" 
+			connection-factory="connectionFactory" 
+			destination-name="order.queue" 
+			channel="orderIncomingChannel"/>	
+			
+			
+	<int:channel id="orderIncomingChannel"/>
+			
+	<int:service-activator 
+		input-channel="orderIncomingChannel" 
+		output-channel="outcomeReplies" 
+		ref="orderService"
+		requires-reply="false"/>
+		
+	<int:channel id="outcomeReplies"/>
+	
+	<int:service-activator 
+		input-channel="outcomeReplies" 
+		ref="jmsEndDemoService"
+		requires-reply="false"/>
+	
+
+</beans>

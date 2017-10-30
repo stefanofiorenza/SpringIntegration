@@ -7,4 +7,22 @@
   </parent>
   <artifactId>SI-00-Commons</artifactId>
   <name>SI-00-Commons</name>
+  
+   <properties>
+      <version.jdk>1.8</version.jdk>     
+   </properties>
+   
+  <build>	
+  	<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${version.jdk}</source>
+					<target>${version.jdk}</target>
+				</configuration>
+			</plugin>			
+		</plugins>
+	</build>
+	
+	
 </project>
