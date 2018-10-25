@@ -26,7 +26,7 @@ public class SI010BasicsTest {
 				
 	}
 	
-	//@Test
+	@Test
 	public void testBasicDemoAnnotationsSI(){
 		
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();

@@ -39,7 +39,7 @@ public class Test02EventDrivenChannels {
 		//ESECUZIONE
 		//********************************************************************************
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-				"classpath:corso/spring/intgr/demo/channels/config/channels-110-basics.xml");
+				"classpath:corso/spring/intgr/channels/demo/config/SI-100-Channels.xml");
 		context.start();
 		
 		TicketRdaProducer producer = context.getBean(TicketRdaProducer.class);

@@ -10,8 +10,8 @@
    <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <spring.version>4.3.0.RELEASE</spring.version>	
-		<spring.integration.version>4.3.0.RELEASE</spring.integration.version>
+        <spring.version>4.3.17.RELEASE</spring.version>	
+		<spring.integration.version>4.3.17.RELEASE</spring.integration.version>
 	    	
 	    <!-- Db libs -->
 		<apache.dbcp.version>1.4</apache.dbcp.version>	
@@ -55,6 +55,20 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>			
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-expression</artifactId>
+		    <version>${spring.version}</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-aop</artifactId>
+		     <version>${spring.version}</version>
+		</dependency>
+		
 		
 		
 	   <!-- Spring Integration -->
@@ -200,7 +214,7 @@
     	<module>SI-100-Channels</module>    	
     	<module>SI-200-Endpoints</module>
     	<module>SI-300-Adapters</module>
-    	<module>SI-210-EndpointsRuntime</module>
+    	<module>SI-210-EndpointsRuntime</module> 
     	<module>SI-010-Basics</module>
     	<module>SI-310-LocalSysAdapters</module>
     	<module>SI-320-ExternalSysAdapters</module>
