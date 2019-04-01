@@ -15,6 +15,7 @@ import corso.spring.intgr.endpoints.demo.config.SI200EndpointsConfig;
 import corso.spring.intgr.endpoints.demo.configs.SI210EndpointsConfig;
 import corso.spring.intgr.endpoints.demo.configs.SI210EndpointsConfigClasspathScan;
 import corso.spring.intgr.endpoints.demo.endpoints.OrderGatewayI;
+import corso.spring.intgr.endpoints.demo.services.gateway.OrderSystemGateway;
 
 public class SI210Test {
 
@@ -55,11 +56,19 @@ public class SI210Test {
 	
 	private void testTemplate(ApplicationContext context){
 		
+		/*
 		MessageChannel channel =context.getBean("orderMainInputChannel", MessageChannel.class);		
 		
 		List<Order> orders= OrderGenerator.createOrders(10);
 		for (Order order : orders) {
 			channel.send(MessageBuilder.withPayload(order).build());
+		}*/
+		
+		OrderSystemGateway orderSystemGateway =(OrderSystemGateway)context.getBean("orderSystemGateway");
+		
+		List<Order> orders= OrderGenerator.createOrders(10);
+		for (Order order : orders) {
+			orderSystemGateway.dispatchOrder(order);
 		}
 	}
 	

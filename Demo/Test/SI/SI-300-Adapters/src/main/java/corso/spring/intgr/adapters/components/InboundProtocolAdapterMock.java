@@ -26,9 +26,14 @@ public class InboundProtocolAdapterMock implements InitializingBean{
 	
 		
 	public Order receiveOrderFromExternalSystemThroughProtocol(){	
+		if(ordersInBuffer.isEmpty()){
+			log.warn("Adapter listen for new orders...");
+			return null;
+		}		
 		Order received=ordersInBuffer.remove(0);
 		log.info("Received from some protocol order#{}",received.getOrderId());
-		return received;	
+		return received;
+	
 	}
 
 

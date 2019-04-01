@@ -22,30 +22,35 @@ import corso.spring.intgr.channels.demo.services.TicketRdaProducer;
 @Configuration
 public class SI100ChannelsConfig {
 
-	private static final long producerDelay=100L;
-	private static final long consumerDelay=3000L;
+
 	
 	@Bean
 	public TicketRdaProducer ticketProducer(){
 		TicketRdaProducer producer = new TicketRdaProducer();
-		producer.setDelay(producerDelay);			
+		producer.setDelay(SI100DemoConsts.producerDelay);			
 		return producer;
 	}
 	
 	@Bean
 	public TicketRdaConsumerPolling ticketRdaConsumerPolling(){
 		TicketRdaConsumerPolling consumer=new TicketRdaConsumerPolling();
-		consumer.setDelay(consumerDelay);		
+		consumer.setDelay(SI100DemoConsts.consumerDelay);		
 		return consumer;
 	}
 	
 	@Bean
 	public TicketRdaConsumerEventDriven ticketRdaConsumerEventDriven(){		
-		TicketRdaConsumerEventDriven consumer=new TicketRdaConsumerEventDriven();
-		TicketRdaMessageHandler messageHandler= new TicketRdaMessageHandler();
-		messageHandler.setDelay(consumerDelay);
-		consumer.setMessageHandler(messageHandler);
+		TicketRdaConsumerEventDriven consumer=new TicketRdaConsumerEventDriven();		
+		consumer.setMessageHandler(messageHandler());
 		return consumer;
+	}
+	
+	@Bean
+	@Qualifier("messageHandler")
+	public TicketRdaMessageHandler messageHandler(){
+		TicketRdaMessageHandler messageHandler= new TicketRdaMessageHandler();
+		messageHandler.setDelay(SI100DemoConsts.consumerDelay);
+		return messageHandler;
 	}
 		
 	@Bean
@@ -75,7 +80,7 @@ public class SI100ChannelsConfig {
 	@Bean
 	@Qualifier("executorChannel")
 	public ExecutorChannel executorChannel(){
-		ExecutorService executorService = Executors.newFixedThreadPool(10);
+		ExecutorService executorService = Executors.newFixedThreadPool(SI100DemoConsts.threadPoolSize);
 		ExecutorChannel executorChannel= new ExecutorChannel(executorService);
 		return executorChannel;
 	}

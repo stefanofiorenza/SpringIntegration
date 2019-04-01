@@ -18,7 +18,7 @@ public class TicketRdaConsumerEventDriven {
 	@Setter
 	private MessageHandler messageHandler;	
 	
-
+	
 	public void setInputChannel(MessageChannel inputChannel) {
 		this.inputChannel = inputChannel;
 		SubscribableChannel innerChannel =(SubscribableChannel)this.inputChannel ;

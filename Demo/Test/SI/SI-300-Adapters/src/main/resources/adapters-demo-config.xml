@@ -15,7 +15,7 @@
 	<int:inbound-channel-adapter channel="orderChannel"
 		ref="inboundProtocolAdapterMock"
 		method="receiveOrderFromExternalSystemThroughProtocol">
-			<int:poller max-messages-per-poll="5" fixed-rate="1000" />
+			<int:poller max-messages-per-poll="5" fixed-rate="3000" />
 	</int:inbound-channel-adapter>
 	
 	<int:channel id="orderChannel">
@@ -26,7 +26,7 @@
 	 <int:outbound-channel-adapter channel="orderChannel"
 		ref="outgoingProtocolAdapterMock"
 		method="sendToExternalSystemThroughProtocol">
-		<int:poller max-messages-per-poll="10" fixed-rate="1000" />
+		<int:poller max-messages-per-poll="10" fixed-rate="200" />
 	</int:outbound-channel-adapter> 
 
 </beans>

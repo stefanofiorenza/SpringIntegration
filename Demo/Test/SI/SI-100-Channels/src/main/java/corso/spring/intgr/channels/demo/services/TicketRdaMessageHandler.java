@@ -21,6 +21,8 @@ public class TicketRdaMessageHandler implements MessageHandler{
 	@Setter
 	private long delay;
 	
+	@Getter
+	private int messageConsumed;
 	
 	@Override
 	public void handleMessage(Message<?> message) throws MessagingException {
@@ -34,6 +36,7 @@ public class TicketRdaMessageHandler implements MessageHandler{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		messageConsumed++;
 		log.info("messaggio con ID: "+ticket.getId()+" processato con successo");	
 	}
 	

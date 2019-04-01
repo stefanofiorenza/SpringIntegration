@@ -12,7 +12,7 @@ import org.springframework.messaging.PollableChannel;
 
 @Configuration
 @EnableIntegration
-@ComponentScan("corso.spring.intgr.demo.basics.services,"
+@ComponentScan("corso.spring.intgr.demo.basics.services,"//)
 		+ "corso.spring.intgr.demo.basics.endpoints") // ATTENZIONE: non e' sufficiente averlo in @IntegrationComponentScan
 @IntegrationComponentScan("corso.spring.intgr.demo.basics.endpoints")
 public class SI010BasicsConfig {

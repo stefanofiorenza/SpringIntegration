@@ -14,6 +14,10 @@ public class OutgoingProtocolAdapterMock {
 
 	
 	public void sendToExternalSystemThroughProtocol(Order order){
-		log.info("Send order#{} to external system", order.getOrderId());
+		if(order== null){
+			log.warn("No MOre orders to Process. Demo can be closed");
+		}else{
+			log.info("Send order#{} to external system", order.getOrderId());
+		}		
 	}
 }

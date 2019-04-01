@@ -28,6 +28,11 @@
 	
 	
 		<!--  JMS Connection Factory-->		
+		<bean id="connectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+		    <property name="brokerURL" value="tcp://localhost:61616"/>
+		    <!-- <property name="trustAllPackages" value="true"/> -->
+		</bean>
+		
 		<bean id="jmsConnectionFactoryNoPool" class="org.springframework.jndi.JndiObjectFactoryBean">
 			<property name="jndiName" value="connectionFactory" />
 			<property name="jndiTemplate" ref="jndiTemplate"/>
@@ -38,13 +43,7 @@
 		 	<constructor-arg ref="jmsConnectionFactoryNoPool" />	  
 		  	<property name="sessionCacheSize" value="10" /> 		  	
 		</bean>
-		
-		<bean id="connectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
-		    <property name="brokerURL" value="tcp://localhost:61616"/>
-		    <property name="trustAllPackages" value="true"/>
-		</bean>
-
-		
+	
 		<!-- Queues -->
 		<bean id="orderQueue" class="org.apache.activemq.command.ActiveMQQueue">
 			<constructor-arg value="order.queue" />

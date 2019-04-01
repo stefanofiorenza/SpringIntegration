@@ -2,6 +2,8 @@ package corso.spring.intgr.channels.main;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -11,18 +13,17 @@ import org.springframework.integration.channel.QueueChannel;
 import org.springframework.messaging.MessageChannel;
 
 import corso.spring.intgr.channels.demo.config.SI100ChannelsConfig;
+import corso.spring.intgr.channels.demo.config.SI100DemoConsts;
 import corso.spring.intgr.channels.demo.services.TicketRdaConsumerEventDriven;
 import corso.spring.intgr.channels.demo.services.TicketRdaConsumerPolling;
+import corso.spring.intgr.channels.demo.services.TicketRdaMessageHandler;
 import corso.spring.intgr.channels.demo.services.TicketRdaProducer;
 import corso.spring.intgr.channels.demo.threads.PerformanceLogger;
 import corso.spring.intgr.channels.demo.threads.PollingConsumerThread;
 import corso.spring.intgr.channels.demo.threads.ProducerThread;
 
 @Slf4j
-public class Test01PollingChannels {
-
-	//private static Logger logger = Logger.getLogger(Test01PollingChannels.class);
-	
+public class Test01Channels {
 	
 	private static TicketRdaConsumerPolling consumerPolling;
 	private static TicketRdaProducer producer;
@@ -30,19 +31,18 @@ public class Test01PollingChannels {
 	
 	private static AnnotationConfigApplicationContext ctx;
 	
-	private static final int qoMessaggi=10;
-	
+		
 	public static void main(String[] args) {
 
 		
-		 //runPollingTestTemplateSingleThread();
+		runPollingTestTemplateSingleThread();
 		 
 		//runPollingTestTemplateMultiThread("queueChannel");
 		//runPollingTestTemplateMultiThread("priorityChannel");
 		//runPollingTestTemplateMultiThread("rendezvousChannel");
 		
 		
-		runEventDrivenTestTemplateMultiThread("publishSubscribeChannel");
+		//runEventDrivenTestTemplateMultiThread("publishSubscribeChannel");
 		//runEventDrivenTestTemplateMultiThread("executorChannel");
 	
 	}
@@ -51,7 +51,7 @@ public class Test01PollingChannels {
 		
 		setup("queueChannel",false);		
 		
-		producer.sendMessageOnChannel(qoMessaggi);		
+		producer.sendMessageOnChannel(SI100DemoConsts.messageToConsume);		
 		
 		//Poll and consume one by one
 		consumerPolling.consumeSingleMessage();
@@ -76,9 +76,7 @@ public class Test01PollingChannels {
 	
 	private static void runEventDrivenTestTemplateMultiThread(String channelQualifier){
 		setup(channelQualifier,true);
-		addPerformanceLogger();
-		startProducerThread();		
-		
+		startProducerThread();			
 	}
 
 	
@@ -106,7 +104,7 @@ public class Test01PollingChannels {
 
 	
 	private static void startProducerThread(){
-		Runnable producerRunnable = new ProducerThread(producer, qoMessaggi);		
+		Runnable producerRunnable = new ProducerThread(producer, SI100DemoConsts.messageToConsume);		
 		Thread threadProducer= new Thread(producerRunnable);
 		threadProducer.start();
 	}
@@ -118,18 +116,7 @@ public class Test01PollingChannels {
 		threadConsumer.start();	
 	}
 	
-	private static void addPerformanceLogger(){
-			
-			
-			//1) Thread per statistiche inizializzato sul tempo corrente		
-			PerformanceLogger loggerJvm= new PerformanceLogger();	
-			
-			
-			//2) PerformanceLogger (Runnable) inserito in un Thread che andra in run alla chiusura della JVM
-			Thread threadShutDownHook= new Thread(loggerJvm);
-			
-			//3) Il Thread di 2) viene registrato tra gli shutDown Hooks Thread. 
-			//  Vedi docs per maggiori dettagli
-			Runtime.getRuntime().addShutdownHook(threadShutDownHook);
-	}
+	
+	
+
 }
